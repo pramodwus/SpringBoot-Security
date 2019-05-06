@@ -1,0 +1,15 @@
+server:
+    port: 4343
+    servlet.context-path: /RestByApi
+spring:
+     mvc:
+       view:
+          prefix: /
+          suffix: .jsp
+     datasource:
+             driverClassName: oracle.jdbc.driver.OracleDriver
+             url: jdbc:oracle:thin:@localhost:1521:xe
+             username: system
+             password: amit 
+     show_sql: true
+     hbm2ddl.auto: update

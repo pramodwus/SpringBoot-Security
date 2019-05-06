@@ -1,0 +1,70 @@
+package com.pack;
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
+
+@Configuration
+@EnableWebSecurity
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter 
+{
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .authorizeRequests()
+                .antMatchers("/welcome**").permitAll()
+                .antMatchers("/index.jsp").permitAll()
+                .antMatchers("/admin**").hasAnyRole("ADMIN")
+                .and()
+                .formLogin();
+                
+                
+                
+        
+                
+        
+        /*ExpressionInterceptUrlRegistry  registry=http.authorizeRequests();
+        AuthorizedUrl  url=(AuthorizedUrl)registry.antMatchers("/welcome**");
+        registry = url.permitAll();
+        url = (AuthorizedUrl)registry.antMatchers("/index.jsp");
+        registry = url.permitAll();
+        url=(AuthorizedUrl)registry.anyRequest();
+        registry = url.hasAnyRole("USER");
+        http =(HttpSecurity)registry.and();
+        HttpBasicConfigurer<HttpSecurity>   config= http.httpBasic();*/
+       	
+    }
+    
+    @Bean
+    public   DataSource   ds()
+    {
+    	DriverManagerDataSource  dmds = new  DriverManagerDataSource();
+    	dmds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
+    	dmds.setUrl("jdbc:oracle:thin:@localhost:1521:xe");
+    	dmds.setUsername("system");
+    	dmds.setPassword("amit");
+    	return  dmds;
+    }
+
+    @Autowired
+    public void configureAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+        /*auth
+            .inMemoryAuthentication()
+                .withUser("shekher").password("avitanish").roles("USER");
+        auth
+        .inMemoryAuthentication().withUser("tanish").password("avinash").roles("ADMIN"); */
+    	
+       auth.jdbcAuthentication()
+    	.dataSource(ds())
+    	.usersByUsernameQuery("select   username,password,enabled   from   users   where   username=?")
+    	.authoritiesByUsernameQuery(" select   u.username, ur.authority   from   users u, user_roles ur where u.user_id = ur.user_id and u.username =?");
+              
+    }
+}

@@ -1,0 +1,9 @@
+server:
+      port: 4242
+      context-path: /RestConsumerApp
+spring:
+     mvc:
+       view:
+          prefix: /
+          suffix: .jsp
+    

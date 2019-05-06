@@ -1,0 +1,87 @@
+package com.sathya.ems.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.sathya.ems.entity.Employee;
+import com.sathya.ems.service.EmployeeServiceImpl;
+
+@Controller
+public class EmployeeController {
+
+	@Autowired
+	private EmployeeServiceImpl imp;
+
+	@RequestMapping(value="/employee",method=RequestMethod.GET)
+	
+	public ModelAndView welocome()
+    {
+	return new ModelAndView("addEmployee");
+    }
+	@RequestMapping(value="/insert", method=RequestMethod.POST)
+    public ModelAndView insert(@RequestBody Employee emp)
+    {
+		Employee e=new Employee();
+        System.out.println("=============================>"+emp);
+		
+		
+		
+		
+  	 /* boolean b=imp.insertEmployee(e);
+     if(b)
+     {
+  	   return new ModelAndView("index","msg","recordis sucessfully Added");
+     }
+     else
+     {
+  	   return new ModelAndView("opration fail");
+     }
+     
+  	  
+  	  
+    }*/
+    }
+    @RequestMapping(value="/showemployee",method=RequestMethod.GET)
+    public ModelAndView show()
+    {
+  	 
+		List<Employee> list=imp.readEmployee();
+  	 
+  	  return new ModelAndView("show","data",list);
+    }
+  	  @RequestMapping(value="/update",method=RequestMethod.POST)
+     public ModelAndView update(@ModelAttribute Employee ee)
+    {
+    		   boolean b=imp.updateEmployee(ee);
+    		
+    		   return show();
+              
+              
+    }
+                   	
+    @RequestMapping(value="/delete",method=RequestMethod.GET)
+	public ModelAndView delete(@RequestParam("id") Integer s1)
+	{
+    	imp.removeEmployee(s1);
+    	 return show(); 	
+	}
+    @RequestMapping(value="/updatedata",method=RequestMethod.GET)
+	  public ModelAndView updateData(@RequestParam("id") Integer s1)
+	 {
+		  
+	     return new ModelAndView("update","k1",s1);	  
+		  
+	  }
+
+	
+}

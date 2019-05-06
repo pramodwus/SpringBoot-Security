@@ -1,0 +1,15 @@
+server:
+    port: 4545
+    servlet.context-path: /RestApp
+management:
+       endpoints:    
+            web:
+              exposure:
+                   include: "*"
+       endpoint:
+            health:
+               show-details: "ALWAYS"
+spring:
+   jackson:
+       serialization:
+                INDENT_OUTPUT: true

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;HibernateCurd&apos; to &apos;MangoCurd&apos;" description="Rename resource &apos;HibernateCurd&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/HibernateCurd" name="MangoCurd" stamp="1548725803929" updateReferences="true"/>
+</session>

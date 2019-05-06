@@ -1,0 +1,16 @@
+--- 
+server: 
+  context-path: /Boot-ems
+  port: 4343
+spring: 
+  datasource: 
+    driverClassName: oracle.jdbc.driver.OracleDriver
+    password: amit
+    url: "jdbc:oracle:thin:@localhost:1521:xe"
+    username: system
+  mvc: 
+    view: 
+      prefix: /
+      suffix: .jsp
+  shbm2ddl.auto: update
+  show_sql: show
